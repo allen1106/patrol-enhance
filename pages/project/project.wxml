@@ -1,0 +1,235 @@
+<!--pages/project/project.wxml-->
+<view class="page-wrapper">
+<view class="header bg">
+  <text class="bold big">{{info.xmmc}}</text>
+  <text class="bold">{{info.rwmc}}</text>
+  <view class="swiper-wrapper">
+    <view class="swiper {{currentTab == 0 ? 'active':'inactive'}}" bindtap="bindSwtichNav" data-tab="0">项目信息</view>
+    <view class="swiper {{currentTab == 1 ? 'active':'inactive'}}" bindtap="bindSwtichNav" data-tab="1">巡检小组</view>
+  </view>
+</view>
+
+<view class="container">
+  <block wx:if="{{currentTab == 0}}">
+    <view class="item-wrapper">
+      <view class="text-wrapper">
+        <text>单位：</text>
+        <text>{{info.dwmc}}</text>
+      </view>
+    </view>
+    <view class="item-wrapper">
+      <view class="text-wrapper">
+        <text>事业部项目：</text>
+        <text>{{info.xmmc}}</text>
+      </view>
+    </view>
+    <view class="item-wrapper">
+      <view class="text-wrapper">
+        <text>土地获取时间：</text>
+        <text>{{info.tdhqsj}}</text>
+      </view>
+    </view>
+    <view class="item-wrapper">
+      <view class="text-wrapper" bindtap="switchImg">
+        <text>小区平面图：</text>
+        <!-- <image wx:if="{{info.img && showImg}}" src="/imgs/project/down.png"></image>
+        <image wx:if="{{info.img && !showImg}}" src="/imgs/project/up.png"></image> -->
+        <image wx:if="{{info.img}}" src="/imgs/project/icon_img.png" bindtap="previewImage"></image>
+      </view>
+      <!-- <view class="img-wrapper" wx:if="{{info.img && showImg}}">
+        <view class="img-upload-container">
+          <view class="img-preview-container" wx:for="{{info.img}}" wx:key="index">
+            <image class="img-preview" src="{{info.img[index]}}" data-src="{{info.img[index]}}" bindtap="previewImage"></image>
+          </view>
+        </view>
+      </view> -->
+    </view>
+    <view class="item-wrapper" bindtap="switchImg1">
+      <view class="text-wrapper">
+        <text>地库平面图：</text>
+        <!-- <image wx:if="{{info.img1 && showImg1}}" src="/imgs/project/down.png"></image>
+        <image wx:if="{{info.img1 && !showImg1}}" src="/imgs/project/up.png"></image> -->
+        <image wx:if="{{info.img1}}" src="/imgs/project/icon_img.png" bindtap="previewImage1"></image>
+      </view>
+      <!-- <view class="img-wrapper" wx:if="{{info.img1 && showImg1}}">
+        <view class="img-upload-container">
+          <view class="img-preview-container" wx:for="{{info.img1}}" wx:key="index">
+            <image class="img-preview" src="{{info.img1[index]}}" data-src="{{info.img1[index]}}" bindtap="previewImage"></image>
+          </view>
+        </view>
+      </view> -->
+    </view>
+    <view class="item-wrapper" bindtap="switchImg2">
+      <view class="text-wrapper">
+        <text>小区鸟瞰图：</text>
+        <!-- <image wx:if="{{info.img2 && showImg2}}" src="/imgs/project/down.png"></image>
+        <image wx:if="{{info.img2 && !showImg2}}" src="/imgs/project/up.png"></image> -->
+        <image wx:if="{{info.img2}}" src="/imgs/project/icon_img.png" bindtap="previewImage2"></image>
+      </view>
+      <!-- <view class="img-wrapper" wx:if="{{info.img2 && showImg2}}">
+        <view class="img-upload-container">
+          <view class="img-preview-container" wx:for="{{info.img2}}" wx:key="index">
+            <image class="img-preview" src="{{info.img2[index]}}" data-src="{{info.img2[index]}}" bindtap="previewImage"></image>
+          </view>
+        </view>
+      </view> -->
+    </view>
+    <view class="item-wrapper">
+      <view class="text-wrapper">
+        <text>基地面积：</text>
+        <text>{{info.jdmj}}</text>
+      </view>
+    </view>
+    <view class="item-wrapper">
+      <view class="text-wrapper">
+        <text>地上计容面积：</text>
+        <text>{{info.jrmj}}</text>
+      </view>
+    </view>
+    <view class="item-wrapper">
+      <view class="text-wrapper">
+        <text>楼板价：</text>
+        <text>{{info.lbj}}</text>
+      </view>
+    </view>
+    <view class="item-wrapper">
+      <view class="text-wrapper">
+        <text>容积率：</text>
+        <text>{{info.rjl}}</text>
+      </view>
+    </view>
+    <view class="item-wrapper">
+      <view class="text-wrapper">
+        <text>地下车库面积：</text>
+        <text>{{info.ckmj}}</text>
+      </view>
+    </view>
+    <view class="item-wrapper">
+      <view class="text-wrapper">
+        <text>地下车位数：</text>
+        <text>{{info.cws}}</text>
+      </view>
+    </view>
+    <view class="item-wrapper">
+      <view class="text-wrapper">
+        <text>地下单车指标：</text>
+        <text>{{info.dczb}}</text>
+      </view>
+    </view>
+    <view class="item-wrapper">
+      <view class="text-wrapper">
+        <text>工规证获取时间：</text>
+        <text>{{info.ggzhqsj}}</text>
+      </view>
+    </view>
+    <view class="item-wrapper">
+      <view class="text-wrapper">
+        <text>示范区完成时间：</text>
+        <text>{{info.sfqwcsj}}</text>
+      </view>
+    </view>
+    <view class="item-wrapper">
+      <view class="text-wrapper">
+        <text>样板房完成时间：</text>
+        <text>{{info.ybfwcsj}}</text>
+      </view>
+    </view>
+    <view class="item-wrapper">
+      <view class="text-wrapper">
+        <text>开盘时间：</text>
+        <text>{{info.kpsj}}</text>
+      </view>
+    </view>
+    <view class="item-wrapper">
+      <view class="text-wrapper">
+        <text>交付时间：</text>
+        <text>{{info.jfsj}}</text>
+      </view>
+    </view>
+    <view class="item-wrapper">
+      <view class="text-wrapper">
+        <text>预计均价：</text>
+        <text>{{info.yjjj}}</text>
+      </view>
+    </view>
+    <view class="item-wrapper">
+      <view class="text-wrapper">
+        <text>当前销售价：</text>
+        <text>{{info.dqsj}}</text>
+      </view>
+    </view>
+    <view class="item-wrapper download-link" wx:if="{{state == 1}}">
+      <view class="text-wrapper" wx:if="{{info.file}}">
+        <image src="/imgs/project/icon_download.png"></image>
+        <view data-id="0" bindtap="downloadReport">下载简化版报告</view>
+      </view>
+      <view class="text-wrapper" wx:if="{{info.file_1}}">
+        <image src="/imgs/project/icon_download.png"></image>
+        <view data-id="1" bindtap="downloadReport">下载完整版报告</view>
+      </view>
+    </view>
+  </block>
+  <block wx:if="{{currentTab == 1}}" wx:for="{{teamList}}" wx:key="item">
+    <block wx:if="{{item.team_list.length > 1}}">
+      <view class="item-wrapper">
+        <view class="text-wrapper">
+          <text>{{item.name}}：</text>
+        </view>
+      </view>
+      <view class="item-wrapper" wx:for="{{item.team_list}}" wx:key="item">
+        <view class="text-wrapper text-indent">
+          <text>{{item}}</text>
+        </view>
+      </view>
+    </block>
+    <block wx:else>
+      <view class="item-wrapper">
+        <view class="text-wrapper">
+          <text>{{item.name}}：</text>
+          <text>{{item.team_list}}</text>
+        </view>
+      </view>
+    </block>
+  </block>
+</view>
+</view>
+
+<!-- 待巡检任务 -->
+<view class="btn-wrapper" wx:if="{{state == 1}}">
+  <view class="btn-login" bindtap="navigateToPost" wx:if="{{canPost == 1}}">
+    <image src="/imgs/project/icon_1.png"></image>
+    <text>问题录入</text>
+  </view>
+  <view class="btn-logout" bindtap="navigateToDraft" data-isfb="1" wx:if="{{info.flag == 3 || canPost == 1}}">
+    <image src="/imgs/project/icon_2.png"></image>
+    <text>我的发布</text>
+  </view>
+  <view class="btn-logout" bindtap="navigateToDraft" data-isfb="0" wx:if="{{canPost == 1}}">
+    <image src="/imgs/project/icon_2.png"></image>
+    <text>草稿箱</text>
+  </view>
+</view>
+
+<!-- 已巡检任务 -->
+<view class="btn-wrapper" wx:if="{{state == 2 && canPost == 1}}">
+  <view class="btn-login" bindtap="navigateToPost">
+    <image src="/imgs/project/icon_1.png"></image>
+    <text>问题录入</text>
+  </view>
+  <view class="btn-logout" bindtap="navigateToDraft" data-isfb="1">
+    <image src="/imgs/project/icon_2.png"></image>
+    <text>我的发布</text>
+  </view>
+  <view class="btn-logout" bindtap="navigateToDraft" data-isfb="0">
+    <image src="/imgs/project/icon_2.png"></image>
+    <text>草稿箱</text>
+  </view>
+</view>
+
+<!-- 任务回复 -->
+<view class="btn-wrapper" wx:if="{{state == 5}}">
+  <view class="btn-login" bindtap="navigateToDraft" data-isfb="1">
+    <image src="/imgs/project/icon_2.png"></image>
+    <text>查看问题</text>
+  </view>
+</view>

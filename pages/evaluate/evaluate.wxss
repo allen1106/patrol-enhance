@@ -1,8 +1,4 @@
 /* pages/report/report.wxss */
-page {
-  background-color: #F6F6F6;
-}
-
 .page-wrapper {
   width: 95%;
   margin: 20rpx auto;

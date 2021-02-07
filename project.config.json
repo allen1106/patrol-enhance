@@ -29,8 +29,8 @@
 	},
 	"compileType": "miniprogram",
 	"libVersion": "2.11.1",
-	"appid": "wxd159c06e88709fe1",
-	"projectname": "patrol",
+	"appid": "wx3bd95e8c13762b55",
+	"projectname": "patrol-enhance",
 	"debugOptions": {
 		"hidedInDevtools": []
 	},

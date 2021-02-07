@@ -61,7 +61,7 @@ Page({
     console.log(app.globalData)
     var that = this
     var id = Number(options.id)
-    var isFb = Number(options.isFb)
+    var isFb = Number(options.isfb)
     if (id == 0) {
       var info = app.globalData.userInfo
       that.setData({

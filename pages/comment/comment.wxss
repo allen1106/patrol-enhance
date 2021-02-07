@@ -1,0 +1,151 @@
+/* pages/comment/comment.wxss */
+.bold {
+  font-weight: bold;
+}
+
+.page-wrapper {
+  width: 100%;
+  margin: 0 auto 120rpx;
+}
+
+.header {
+  position: relative;
+  width: 100%;
+  height: 100rpx;
+  background-color: #006ec5;
+}
+
+.header text {
+  margin: 10rpx;
+}
+
+.header .big {
+  font-size: 48rpx;
+}
+
+.swiper-wrapper {
+  position: absolute;
+  bottom: 0;
+  width: 90%;
+  margin: 0 5%;
+  height: 80rpx;
+  line-height: 80rpx;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+}
+.swiper-wrapper .swiper {
+  text-align: center;
+  font-weight: bold;
+  font-size: 36rpx;
+  width: calc(50% - 5rpx);
+  border-top-left-radius: 10rpx;
+  border-top-right-radius: 10rpx;
+}
+.swiper-wrapper .swiper.active {
+  background-color: #fff;
+  color: #006ec5;
+}
+.swiper-wrapper .swiper.inactive {
+  background-color: #b6d9ef;
+  color: #fff;
+}
+
+.item-wrapper {
+  width: 90%;
+  margin: 30rpx auto;
+  padding: 20rpx 0;
+  background-color: #fff;
+  border-radius: 15rpx;
+  box-shadow:rgba(0,0,0,.3) 0px 0px 15px;
+  font-size: 28rpx;
+}
+
+.item-wrapper .title {
+  border-left: 10rpx solid #0073CC;
+  padding: 10rpx calc(5% - 10rpx);
+  font-size: 30rpx;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.item-wrapper .detail {
+  width: 90%;
+  margin: 0 auto;
+  border-top: 1rpx solid gray;
+}
+
+.item-wrapper .detail .text-wrapper {
+  margin: 20rpx 0;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  color: #A3A3A3;
+}
+
+.btn-wrapper {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  height: 100rpx;
+  background-color: #fff;
+  display: flex;
+  flex-direction: row;
+}
+
+.btn-wrapper view {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #000;
+  font-size: 36rpx;
+}
+
+.btn-logout {
+  border-left: gray solid 2rpx;
+}
+
+.btn-wrapper view image {
+  width: 40rpx;
+  height: 40rpx;
+}
+
+.table {
+  /* width: 90%; */
+  margin: 20rpx auto 120rpx;
+  background-color: #fff;
+  padding: 20rpx;
+}
+
+.tr {
+  width: 1360rpx;
+  display: flex;
+  flex-direction: row;
+}
+
+.td {
+  display: inline-block;
+  border: 0.5px solid #724f4f;
+  text-align: center;
+  font-size: 28rpx;
+  height: 40rpx;
+  width: 120rpx;
+  padding: 20rpx;
+}
+
+.two-td {
+  width: 320rpx;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.two-td .td {
+  flex: 1;
+}

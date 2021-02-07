@@ -1,28 +1,37 @@
-<view class="container">
-  <view class="notification">
+<image src="/imgs/personal/bg.png" class="page-wrapper">
+  <view class="header">
     <image src="{{userInfo.headimgurl}}"></image>
-    <text>{{userInfo.realname}}</text>
+    <view class="text-wrapper">
+      <text class="name">{{userInfo.realname}}</text>
+      <text class="tel">手机：{{userInfo.tel}}</text>
+    </view>
   </view>
+</image>
+
+<view class="container">
   <view class="info">
     <view class="info-item">
-      <text>我的部门</text>
+      <image src="/imgs/personal/icon_1.png" mode="widthFix"></image>
+      <text>所 属 单 位：</text>
       <text>{{userInfo.department}}</text>
     </view>
-    <view class="info-item" bindtap="navigateToTaskList" data-isevaluate="0">
-      <text>发布报告</text>
-      <text>{{userInfo.report}}</text>
+    <view class="info-item">
+      <image src="/imgs/personal/icon_2.png" mode="widthFix"></image>
+      <text>待  巡  检：</text>
+      <text class="number">{{userInfo.data_1}}</text>
+      <text>个</text>
     </view>
-    <view class="info-item" bindtap="navigateToTaskList" data-isevaluate="1">
-      <text>回复报告</text>
-      <text>{{userInfo.evaluate}}</text>
+    <view class="info-item">
+      <image src="/imgs/personal/icon_3.png" mode="widthFix"></image>
+      <text>正 在 巡 检：</text>
+      <text class="number">{{userInfo.data_7}}</text>
+      <text>个</text>
     </view>
-    <view class="info-item project">
-      <view class="title-wrapper">项目列表</view>
-      <view class="list-wrapper">
-        <view class="item-list" wx:for="{{projectList}}" wx:key="item">
-          <text>{{item.name}}</text>
-        </view>
-      </view>
+    <view class="info-item">
+      <image src="/imgs/personal/icon_4.png" mode="widthFix"></image>
+      <text>待  评  价：</text>
+      <text class="number">{{userInfo.data_3}}</text>
+      <text>个</text>
     </view>
   </view>
 </view>

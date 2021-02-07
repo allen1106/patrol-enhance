@@ -1,0 +1,204 @@
+<!--pages/question/question.wxml-->
+<form bindsubmit="bindSubmitForm" bindreset="bindBackToIndex">
+<view class="nav" wx:if="{{!pid}}">
+  <view class="task">
+    <picker bindchange="bindTaskChange" value="{{taskIdx}}" range="{{taskList}}" range-key="name">
+      <view class="picker">
+        <text>{{taskList[taskIdx].name}}</text>
+        <image src="/imgs/down.png"></image>
+      </view>
+    </picker>
+  </view>
+</view>
+<view class="nav">
+  <view class="area">
+    <picker bindchange="bindAreaChange" value="{{areaIdx}}" range="{{areaList}}" range-key="name">
+      <view class="picker">
+        <text>{{areaList[areaIdx].name}}</text>
+        <image src="/imgs/down.png"></image>
+      </view>
+    </picker>
+  </view>
+  <view class="industry">
+    <picker bindchange="bindIndustryChange" value="{{industryIdx}}" range="{{industryList}}" range-key="name">
+      <view class="picker">
+        <text>{{industryList[industryIdx].name}}</text>
+        <image src="/imgs/down.png"></image>
+      </view>
+    </picker>
+  </view>
+  <view class="system" wx:if="{{pid}}">
+    <picker bindchange="bindSystemChange" value="{{systemIdx}}" range="{{systemList}}" range-key="name">
+      <view class="picker">
+        <text>{{systemList[systemIdx].name}}</text>
+        <image src="/imgs/down.png"></image>
+      </view>
+    </picker>
+  </view>
+</view>
+<view class="nav">
+  <view class="system" wx:if="{{!pid}}">
+    <picker bindchange="bindSystemChange" value="{{systemIdx}}" range="{{systemList}}" range-key="name">
+      <view class="picker">
+        <text>{{systemList[systemIdx].name}}</text>
+        <image src="/imgs/down.png"></image>
+      </view>
+    </picker>
+  </view>
+  <view class="assess">
+    <picker bindchange="bindAssessChange" value="{{assessIdx}}" range="{{assessList}}" range-key="name">
+      <view class="picker">
+        <text>{{assessList[assessIdx].name}}</text>
+        <image src="/imgs/down.png"></image>
+      </view>
+    </picker>
+  </view>
+  <view class="problem">
+    <picker bindchange="bindProblemChange" value="{{problemIdx}}" range="{{problemList}}" range-key="name">
+      <view class="picker">
+        <text>{{problemList[problemIdx].name}}</text>
+        <image src="/imgs/down.png"></image>
+      </view>
+    </picker>
+  </view>
+</view>
+
+<view class="description">
+  <view class="item-wrapper">
+    <view class="label">发布人</view>
+    <view class="input">
+      <textarea bindinput="bindInputRealname" value="{{taskInfo.fbr || realname}}" name="realname" wx:if="{{id==0 || isFb==0}}"></textarea>
+      <text wx:else>{{taskInfo.fbr}}</text>
+    </view>
+  </view>
+  <view class="item-wrapper">
+    <view class="label">发布时间</view>
+    <view class="input">
+      <textarea bindinput="bindInputTaskTime" value="{{taskInfo.task_time || taskTime}}" name="taskTime" wx:if="{{id==0 || isFb==0}}"></textarea>
+      <text wx:else>{{taskInfo.task_time}}</text>
+    </view>
+  </view>
+  <view class="item-wrapper">
+    <view class="label">问题描述</view>
+    <view class="input">
+      <textarea bindinput="bindInputQuestion" value="{{taskInfo.question || question || ''}}" name="question" wx:if="{{id==0 || isFb==0}}"></textarea>
+      <text wx:else>{{taskInfo.question || ''}}</text>
+      <view bindtouchstart="bindSetQuestion"
+        bindtouchend="bindTouchUp"
+        class="btn-speak" wx:if="{{id==0 || isFb==0}}">
+        <image src="/imgs/question/icon_1.png"></image>
+      </view>
+    </view>
+  </view>
+  <view class="item-wrapper image-panel">
+    <view class="label">添加图片</view>
+    <view class="input">
+      <view class="img-upload-container">
+        <view class="img-preview-container" wx:for="{{imageList}}" wx:key="index">
+          <image class="img-preview" src="{{imageList[index]}}" data-src="{{imageList[index]}}" bindtap="previewImage"></image>
+          <image class="img-close" src="/imgs/close.png" bindtap="delImg" data-src="{{imageList[index]}}" data-index="0" wx:if="{{id==0 || isFb==0}}"></image>
+        </view>
+      </view>
+      <view class="img-preview-container" bindtap="chooseImage" wx:if="{{imageList.length < count}}" wx:if="{{id==0 || isFb==0}}">
+        <image class="img-preview upload-icon" src="/imgs/question/icon_2.png"></image>
+      </view>
+    </view>
+  </view>
+  <view class="two-item">
+    <view class="item-wrapper half-line">
+      <view class="label">数量分布</view>
+      <view class="input">
+        <picker bindchange="bindDistributionChange" value="{{distributionIdx}}" range="{{distributionList}}" range-key="name" wx:if="{{id==0 || isFb==0}}">
+          <view class="picker">
+            <text>{{distributionList[distributionIdx].name}}</text>
+            <image src="/imgs/question/icon_down.png"></image>
+          </view>
+        </picker>
+        <text wx:else>{{distributionList[distributionIdx].name}}</text>
+      </view>
+    </view>
+    <view class="item-wrapper half-line right">
+      <view class="label">影响程度</view>
+      <view class="input">
+        <picker bindchange="bindDegreeChange" value="{{degreeIdx}}" range="{{degreeList}}" range-key="name" wx:if="{{id==0 || isFb==0}}">
+          <view class="picker">
+            <text>{{degreeList[degreeIdx].name}}</text>
+            <image src="/imgs/question/icon_down.png"></image>
+          </view>
+        </picker>
+        <text wx:else>{{degreeList[degreeIdx].name}}</text>
+      </view>
+    </view>
+  </view>
+  <view class="item-wrapper">
+    <view class="label">整改建议</view>
+    <view class="input">
+      <textarea bindinput="bindInputSolve" value="{{taskInfo.solve || solve || ''}}" name="solve" wx:if="{{id==0 || isFb==0}}"></textarea>
+      <text wx:else>{{taskInfo.solve || ''}}</text>
+      <view bindtouchstart="bindSetSolve"
+        bindtouchend="bindTouchUp"
+        class="btn-speak" wx:if="{{id==0 || isFb==0}}">
+        <image src="/imgs/question/icon_1.png"></image>
+      </view>
+    </view>
+  </view>
+</view>
+
+<view class="btn-wrapper" wx:if="{{isFb == 0}}">
+  <button form-type="submit" data-id="1" class="btn-login">
+    <image src="/imgs/question/icon_3.png"></image>
+    <text>提交</text>
+  </button>
+  <button form-type="reset" class="btn-logout" wx:if="{{!showLogin}}" bindtap="navigateToDraft">
+    <image src="/imgs/question/icon_4.png"></image>
+    <text>取消</text>
+  </button>
+  <button form-type="submit" data-id="0" class="btn-logout" wx:if="{{!showLogin}}">
+    <image src="/imgs/question/icon_5.png"></image>
+    <text>保存草稿</text>
+  </button>
+</view>
+</form>
+
+<form bindsubmit="bindSubmitComment" bindreset="bindBackToIndex">
+<block wx:if="{{isFb != 0 && isself == 0 && canComment}}">
+<view class="comment-wrapper">
+  <view class="co-blue label">回复问题</view>
+  <view class="item-wrapper">
+    <view class="label">处理回复</view>
+    <view class="input"><textarea placeholder="请输入处理内容" name="comment"></textarea></view>
+  </view>
+  <!-- <view class="item-wrapper image-panel">
+    <view class="label">添加图片</view>
+    <view class="input">
+      <view class="img-upload-container">
+        <view class="img-preview-container" wx:for="{{image1List}}" wx:key="index">
+          <image class="img-preview" src="{{image1List[index]}}" data-src="{{image1List[index]}}" bindtap="previewImage1"></image>
+          <image class="img-close" src="/imgs/close.png" bindtap="delImg1" data-src="{{image1List[index]}}" data-index="0"></image>
+        </view>
+      </view>
+      <view class="img-preview-container" bindtap="chooseImage1" wx:if="{{image1List.length < count}}">
+        <image class="img-preview upload-icon" src="/imgs/question/icon_2.png"></image>
+      </view>
+    </view>
+  </view> -->
+  <view class="btn-wrapper">
+    <button form-type="submit" data-id="1" class="btn-login">
+      <image src="/imgs/question/icon_3.png"></image>
+      <text>提交</text>
+    </button>
+    <button form-type="reset" class="btn-logout" wx:if="{{!showLogin}}" bindtap="navigateToDraft">
+      <image src="/imgs/question/icon_4.png"></image>
+      <text>取消</text>
+    </button>
+  </view>
+</view>
+</block>
+<view class="comment-list" wx:if="{{isFb != 0}}">
+  <view class="comment-item" wx:for="{{comments}}" wx:key="index">
+    <text class="content">{{comments[index].evaluate_content}}</text>
+    <text>{{item.evaluate_name}}</text>
+    <text>{{item.evaluate_time}}</text>
+  </view>
+</view>
+</form>

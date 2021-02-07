@@ -8,31 +8,29 @@ Page({
    * 页面的初始数据
    */
   data: {
-    title: "",
     userId: null,
-    isEvaluate: 0,
-    isFb: 1,
     submitList: null,
-    page: 1,
-    regionList: [{"name": "请选择区域", "department_id": 0}],
-    regionIdx: 0,
-    regionId: 0,
-    projectList: [{"name": "请选择项目", "project_id": 0}],
-    proIdx: 0,
+    state: 0,
+    genreList: [{"name": "请选择巡检类别", "genre_id": 0}],
+    genreIdx: 0,
+    genreId: 0,
+    batchList: [{"name": "请选择巡检批次", "batch_id": 0}],
+    batchIdx: 0,
+    batchId: 0,
+    departList: [{"name": "请选择受检单位", "department_id": 0}],
+    departIdx: 0,
+    departId: 0,
+    projectList: [{"name": "请选择受检项目", "item_id": 0}],
+    projectIdx: 0,
     projectId: 0,
-    systemList: [{"name": "请选择专业", "industry_id": 0}],
-    sysIdx: 0,
-    systemId: 0,
-    quesList: [{"name": "请选择问题类型", "ques_id": 0}],
-    quesIdx: 0,
-    quesId: 0,
-    statusList: [{"name": "请选择状态", "isFb": 3}, {"name": "已解决", "isFb": 2}, {"name": "待解决", "isFb": 1}],
+    statusList: [],
     statusIdx: 0,
     startDate: "请选择开始时间",
     endDate: "请选择结束时间",
     showCheckbox: false,
     touchStart: 0,
-    touchEnd: 0
+    touchEnd: 0,
+    canUpdateStatus: 0,
   },
 
   /**
@@ -40,34 +38,29 @@ Page({
    */
   onLoad: function (options) {
     var that = this
-    var isFb = Number(options.isfb)
-    var isEvaluate = Number(options.isEvaluate)
-    console.log(isFb, isEvaluate)
+    var state = Number(options.state)
+    var title = options.title
     that.setData({
-      isFb: isFb,
-      isEvaluate: isEvaluate,
+      state: state,
       userId: wx.getStorageSync('userId')
     })
-    var title = ""
-    if (isFb) {
-      title += "已"
-    } else {
-      title += "待"
-    }
-    if (isEvaluate) {
-      title += "处理列表"
-    } else {
-      title += "巡检任务列表"
-    }
-    that.setData({
+    wx.setNavigationBarTitle({
       title: title
     })
-    wx.setNavigationBarTitle({
-      title: that.data.title
+    let statusList = [{"name": "请选择状态", "key": "is_pj", "code": -1}, {"name": "未评价", "key": "is_pj", "code": 0}, {"name": "已评价", "key": "is_pj", "code": 1}]
+    if (state == 1) {
+      statusList = [{"name": "请选择状态", "key": "state", "code": 0}, {"name": "待巡检", "key": "state", "code": 1}, {"name": "巡检进行中", "key": "state", "code": 6}, {"name": "已完成巡检", "key": "state", "code": 2}]
+    }
+    if (state == 5) {
+      statusList = [{"name": "请选择状态", "key": "is_hf", "code": -1}, {"name": "未回复", "key": "is_hf", "code": 0}, {"name": "已回复", "key": "is_hf", "code": 1}]
+    }
+    that.setData({
+      statusIdx: 0,
+      statusList: statusList
     })
-    that.fetchRegionList()
-    that.fetchSystemList()
-    that.fetchQuesList()
+    that.fetchGenreList()
+    that.fetchBatchList()
+    that.fetchDepartList()
   },
 
   onShow: function () {
@@ -75,16 +68,46 @@ Page({
     that.fetchTaskList()
   },
 
-  fetchRegionList: function () {
+  fetchGenreList: function () {
     var that = this
-    // 获取部门信息
+    // 获取巡检类别
+    api.phpRequest({
+      url: 'genre.php',
+      success: function (res) {
+        var list = res.data
+        list = that.data.genreList.concat(list)
+        that.setData({
+          genreList: list
+        })
+      }
+    })
+  },
+
+  fetchBatchList: function (fn) {
+    var that = this
+    // 获取巡检类别
+    api.phpRequest({
+      url: 'batch.php',
+      success: function (res) {
+        var list = res.data
+        list = that.data.batchList.concat(list)
+        that.setData({
+          batchList: list
+        })
+      }
+    })
+  },
+
+  fetchDepartList: function () {
+    var that = this
+    // 获取问题类型列表
     api.phpRequest({
       url: 'department.php',
       success: function (res) {
         var list = res.data
-        list = that.data.regionList.concat(list)
+        list = that.data.departList.concat(list)
         that.setData({
-          regionList: list
+          departList: list
         })
       }
     })
@@ -96,7 +119,7 @@ Page({
     api.phpRequest({
       url: 'project.php',
       data: {
-        'department_id': that.data.regionId
+        'department_id': that.data.departId
       },
       success: function (res) {
         var list = res.data
@@ -108,51 +131,31 @@ Page({
     })
   },
 
-  fetchSystemList: function (fn) {
-    return new Promise(resolve => {
-      var that = this;
-      api.phpRequest({
-        url: 'system.php',
-        data: {
-          userid: wx.getStorageSync('userId')
-        },
-        success: function (res) {
-          var list = res.data
-          list = that.data.systemList.concat(list)
-          that.setData({
-            systemList: list
-          })
-          if (fn) {
-            fn()
-          }
-        }
-      })
-    })
-  },
-
-  fetchQuesList: function () {
-    var that = this
-    // 获取问题类型列表
-    api.phpRequest({
-      url: 'problem.php',
-      success: function (res) {
-        var list = res.data
-        list = that.data.quesList.concat(list)
-        that.setData({
-          quesList: list
-        })
-      }
-    })
-  },
-
-  bindRegionChange: function (e) {
+  bindGenreChange: function (e) {
     var idx = e.detail.value
     var that = this
     that.setData({
-      regionIdx: idx,
-      regionId: that.data.regionList[idx].department_id
+      genreIdx: idx,
+      genreId: that.data.genreList[idx].genre_id
+    }, that.fetchTaskList)
+  },
+
+  bindBatchChange: function (e) {
+    var idx = e.detail.value
+    this.setData({
+      batchIdx: idx,
+      batchId: this.data.batchList[idx].batch_id
+    }, this.fetchTaskList)
+  },
+
+  bindDepartChange: function (e) {
+    var idx = e.detail.value
+    var that = this
+    that.setData({
+      departIdx: idx,
+      departId: that.data.departList[idx].department_id
     }, () => {
-      if (that.data.regionIdx != 0) {
+      if (that.data.departIdx != 0) {
         that.initProjectList(that.fetchProjectList)
       } else {
         that.initProjectList()
@@ -165,56 +168,24 @@ Page({
     var idx = e.detail.value
     var that = this
     that.setData({
-      proIdx: idx,
+      projectIdx: idx,
       projectId: this.data.projectList[idx].project_id
-    }, this.fetchTaskList)
-  },
-
-  bindQuesChange: function (e) {
-    var idx = e.detail.value
-    this.setData({
-      quesIdx: idx,
-      quesId: this.data.quesList[idx].problem_id
     }, this.fetchTaskList)
   },
 
   initProjectList: function (fn) {
     this.setData({
       projectList: [{"name": "请选择项目", "project_id": 0}],
-      proIdx: 0,
+      projectIdx: 0,
       projectId: 0
     }, () => {
       if (fn) { fn() }
     })
   },
 
-  bindSystemChange: function (e) {
-    var idx = e.detail.value
-    this.setData({
-      sysIdx: e.detail.value,
-      systemId: this.data.systemList[idx].industry_id
-    }, this.fetchTaskList)
-  },
-
   bindStatusChange: function (e) {
-    var idx = e.detail.value
     this.setData({
       statusIdx: e.detail.value,
-      isFb: this.data.statusList[idx].isFb
-    }, this.fetchTaskList)
-  },
-
-  bindStartChange: function (e) {
-    var date = e.detail.value
-    this.setData({
-      startDate: date
-    }, this.fetchTaskList)
-  },
-
-  bindEndChange: function (e) {
-    var date = e.detail.value
-    this.setData({
-      endDate: date
     }, this.fetchTaskList)
   },
 
@@ -222,24 +193,25 @@ Page({
     var that = this
     var data = {
       userid: that.data.userId,
-      page: that.data.page,
-      is_fb: that.data.isFb
+      state: that.data.state
     }
-    console.log(that.data)
-    if (that.data.regionIdx != 0) {data["department_id"] = that.data.regionId}
+    if (that.data.state == 1) {
+      data = {
+        userid: that.data.userId
+      }
+    }
+    if (that.data.genreId != 0) {data["genre_id"] = that.data.genreId}
+    if (that.data.batchId != 0) {data["batch_id"] = that.data.batchId}
+    if (that.data.departId != 0) {data["department_id"] = that.data.departId}
     if (that.data.projectId != 0) {data["project_id"] = that.data.projectId}
-    if (that.data.systemId != 0) {data["industry_id"] = that.data.systemId}
-    if (that.data.quesId != 0) {data["problem_id"] = that.data.quesId}
-    if (that.data.startDate != "请选择开始时间") {data["startDate"] = that.data.startDate}
-    if (that.data.endDate != "请选择结束时间") {data["endDate"] = that.data.endDate}
-    if (!concatFlag) {
-      data["page"] = 1
+    if (that.data.statusIdx != 0) {
+      let statusObj = that.data.statusList[that.data.statusIdx]
+      data[statusObj['key']] = statusObj['code']
     }
     api.phpRequest({
-      url: that.data.isEvaluate ? 'evaluate.php' : 'report.php',
+      url: 'task.php',
       data: data,
       success: function (res) {
-        console.log(res)
         var list = res.data
         if (concatFlag) {
           list = that.data.submitList.concat(list)
@@ -256,37 +228,44 @@ Page({
    */
   onReachBottom: function () {
     var fetchWrapper = function () {
-      this.fetchTaskList(true)
+      this.fetchTaskList()
     }
     this.setData({
       page: this.data.page + 1
     }, fetchWrapper)
   },
 
-  viewReport: function (e) {
+  viewDetail: function (e) {
     if (this.data.showCheckbox) return
     console.log(e.currentTarget.dataset.rid)
-    var rid = e.currentTarget.dataset.rid
-    var isFb = e.currentTarget.dataset.isfb
-    if (this.data.isEvaluate) {
-      isFb = this.data.isFb
-    }
-    console.log(rid, isFb)
-    if (this.data.isEvaluate) {
+
+    let rid = e.currentTarget.dataset.rid
+
+    if (this.data.state == 3) {
       wx.navigateTo({
-        url: '/pages/evaluate/evaluate?id=' + rid + '&isFb=' + isFb,
+        url: '/pages/comment/comment?tid=' + rid
+      })
+    } else if (this.data.state == 4) {
+      wx.navigateTo({
+        url: '/pages/question/list?tid=' + rid + '&isfb=1' + '&isdown=1'
+      })
+    } else if (this.data.state == 7) {
+      wx.navigateTo({
+        url: '/pages/question/list?tid=' + rid + '&isfb=0' + '&isself=1'
       })
     } else {
       wx.navigateTo({
-        url: '/pages/report/report?id=' + rid + '&isFb=' + isFb,
+        url: '/pages/project/project?id=' + rid + "&state=" + this.data.state,
       })
     }
   },
 
   showCheckbox: function () {
-    this.setData({
-      showCheckbox: true
-    })
+    // if (this.data.state == 4) {
+    //   this.setData({
+    //     showCheckbox: true
+    //   })
+    // }
   },
   hideCheckbox: function () {
     this.setData({
@@ -330,4 +309,36 @@ Page({
       }
   })
   },
+
+  updateStatus: function (e) {
+    var that = this
+    let info = e.currentTarget.dataset.info
+    api.phpRequest({
+      url: "handle.php",
+      data: {
+        userid: wx.getStorageSync('userId'),
+        task_id: info.id,
+        state: info.status == 1 ? 2 : 1
+      },
+      success: function (res) {
+        if (res.data.status == 1) {
+          wx.showToast({
+            title: '处理成功',
+            icon: 'success',
+          })
+          for (let i in that.data.submitList) {
+            if (that.data.submitList[i].id == info.id) {
+              that.data.submitList[i].status = info.status == 1 ? 2 : 1
+              that.data.submitList[i].flag = res.data.flag
+            }
+          }
+        } else {
+          wx.showToast({
+            title: '处理失败',
+            icon: 'success',
+          })
+        }
+      }
+    })
+  }
 })

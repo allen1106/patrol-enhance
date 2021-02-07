@@ -1,19 +1,23 @@
 {
   "pages": [
     "pages/index/index",
+    "pages/register/register",
     "pages/login/login",
     "pages/statistics/statistics",
     "pages/personal/personal",
     "pages/tasklist/tasklist",
-    "pages/opinion/opinion",
-    "pages/register/register",
     "pages/logs/logs",
     "pages/evaluate/evaluate",
-    "pages/report/report"
+    "pages/report/report",
+    "pages/project/project",
+    "pages/question/question",
+    "pages/comment/comment",
+    "pages/comment/post",
+    "pages/question/list"
   ],
   "window": {
     "backgroundTextStyle": "light",
-    "navigationBarBackgroundColor": "#4876FF",
+    "navigationBarBackgroundColor": "#006ec5",
     "navigationBarTextStyle": "white"
   },
   "style": "v2",

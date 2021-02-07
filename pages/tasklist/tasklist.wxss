@@ -2,38 +2,24 @@
 .nav {
   display: flex;
   justify-content: space-between;
-  width: calc(95% - 40rpx);
+  width: calc(90% - 40rpx);
   height: 80rpx;
   margin: 20rpx auto;
   padding: 0 20rpx;
-  background-color: #4876FF;
+  background-color: #006ec5;
   border-radius: 20rpx;
   color: #fff;
   align-items: center;
-  font-size: 20rpx;
-}
-
-.date-filter {
-  display: flex;
-  width: calc(95% - 40rpx);
-  height: 80rpx;
-  margin: 20rpx auto;
-  padding: 0 20rpx;
-  background-color: #4876FF;
-  border-radius: 20rpx;
-  color: #fff;
-  align-items: center;
-  justify-content: space-between;
   font-size: 20rpx;
 }
 
 .task-list {
   width: 90%;
-  margin: 0 auto;
+  margin: 10rpx auto 120rpx;
 }
 
 .item-wrapper {
-  margin-top: 50rpx;
+  margin-top: 30rpx;
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -41,11 +27,49 @@
 
 .task-item {
   width: 100%;
+  height: 160rpx;
   display: flex;
   flex-direction: column;
-  padding: 10rpx 30rpx;
-  border: 1rpx solid #EAE7E8;
-  border-radius: 10rpx;
+  justify-content: space-between;
+  padding: 30rpx 30rpx;
+  border-radius: 15rpx;
+  background-color: #fff;
+  box-shadow:rgba(0,0,0,.3) 0px 0px 15px;
+}
+
+.task-item .name {
+  font-size: 40rpx;
+  color: #0073CC;
+}
+.task-item .title {
+  font-size: 32rpx;
+  color: #585858;
+}
+
+.task-item .bottom-wrapper {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.task-item .time {
+  margin: 10rpx 0;
+  font-size: 28rpx;
+  color: #ACACAC;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+.task-item .flag.active {
+  font-size: 28rpx;
+  color: #0073CC;
+  align-items: flex-end;
+}
+.task-item .flag.inactive {
+  font-size: 28rpx;
+  color: #ACACAC;
+  align-items: flex-end;
 }
 
 .task-item view {
@@ -55,30 +79,15 @@
   align-items: center;
 }
 
-.task-item view.title text {
-  display: inline-block;
-  flex: 8;
+.task-item view.status-wrapper {
+  flex-direction: column;
 }
 
-.task-item view.title text:nth-child(2),
-.task-item view.title text:nth-child(3) {
-  margin-left: 5rpx;
-  font-weight: bold;
-  font-size: 24rpx;
-  height: 40rpx;
-  width: 100rpx;
-  flex: 1;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.task-item view:nth-child(2n) {
-  margin-top: 20rpx;
-}
-
-.task-item view.note {
-  font-size: 24rpx;
+.status-wrapper .btn {
+  padding: 10rpx;
+  border-radius: 10rpx;
+  background-color: #0073CC;
+  color: #fff;
 }
 
 .picker {
@@ -96,14 +105,6 @@
   width: 30rpx;
   height: 30rpx;
 }
-
-/* .co-red {
-  color: red;
-}
-
-.co-green {
-  color: blue;
-} */
 
 .co-red {
   background-color: orange;

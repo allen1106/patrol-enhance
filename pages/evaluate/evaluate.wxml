@@ -102,44 +102,6 @@
       </view>
     </view>
   </view>
-  <!-- <view class="assign">
-    <view class="title">推送给：</view>
-    <scroll-view class="scroll-view-con" scroll-y>
-      <view class="member-container" wx:for="{{memberList}}" wx:for-index="index" wx:for-item="value">
-        <view class="title-wrapper">{{departmentList[index].name}}:</view>
-        <view class="check-wrapper">
-          <view class="select-all">
-            <checkbox disabled="true" data-sidx="{{index}}" checked="{{selectAll[index]}}">全选</checkbox>
-          </view>
-          <view class="select-list">
-            <checkbox-group bindchange="checkboxChange">
-              <view class="checkbox" wx:for="{{value}}" wx:key="index" wx:for-index="midx">
-              <checkbox disabled="true" value="{{value[midx].id}}" checked="{{value[midx].checked}}" data-sidx="{{index}}" data-midx="{{midx}}">{{value[midx].realname}}</checkbox>
-              </view>
-            </checkbox-group>
-          </view>
-        </view>
-      </view>
-    </scroll-view>
-    <view class="title">抄送给：</view>
-    <scroll-view class="scroll-view-con" scroll-y>
-      <view class="member-container" wx:for="{{memberList1}}" wx:for-index="index" wx:for-item="value">
-        <view class="title-wrapper">{{departmentList[index].name}}:</view>
-        <view class="check-wrapper">
-          <view class="select-all">
-            <checkbox disabled="true" bindtap="bindSelectAll1" data-sidx="{{index}}" checked="{{selectAll1[index]}}">全选</checkbox>
-          </view>
-          <view class="select-list">
-            <checkbox-group bindchange="checkboxChange">
-              <view class="checkbox" wx:for="{{value}}" wx:key="index" wx:for-index="midx">
-              <checkbox disabled="true" bindtap="bindSelect1" value="{{value[midx].id}}" checked="{{value[midx].checked}}" data-sidx="{{index}}" data-midx="{{midx}}">{{value[midx].realname}}</checkbox>
-              </view>
-            </checkbox-group>
-          </view>
-        </view>
-      </view>
-    </scroll-view>
-  </view> -->
   <view class="comment-list">
     <view class="comment-item" wx:for="{{comments}}" wx:key="index">
       <text class="content">{{comments[index].evaluate_content}}</text>
@@ -147,11 +109,7 @@
         <view class="img-upload-container" data-index="3">
           <view class="img-preview-container" wx:for="{{comments[index].evaluate_imgs}}" wx:key="item" wx:for-item="url" wx:for-index="cidx">
             <image class="img-preview" src="{{url}}" data-src="{{url}}" data-index="3" data-cidx="{{index}}" bindtap="previewImage"></image>
-            <!-- <image class="img-close" src="/imgs/close.png" bindtap="delImg" data-src="{{imageList[index]}}" data-index="1"></image> -->
           </view>
-          <!-- <view class="img-preview-container" data-index="1" bindtap="chooseImage" wx:if="{{image1List.length < count}}">
-            <image class="img-preview" src="/imgs/report/1.png"></image>
-          </view> -->
         </view>
       </view>
       <text>{{item.evaluate_name}}</text>

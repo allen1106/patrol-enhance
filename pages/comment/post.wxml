@@ -1,0 +1,118 @@
+<!--pages/comment/post.wxml-->
+<form bindsubmit="bindSubmitForm" bindreset="bindBackToIndex">
+<view class="nav" wx:if="{{status == 0}}">
+  <view class="industry">
+    <picker bindchange="bindIndustryChange" value="{{industryIdx}}" range="{{industryList}}" range-key="name">
+      <view class="picker">
+        <text>{{industryList[industryIdx].name}}</text>
+        <image src="/imgs/down.png"></image>
+      </view>
+    </picker>
+  </view>
+</view>
+
+<view class="description">
+  <view class="item-wrapper">
+    <view class="label">产品定位</view>
+    <view class="input">
+      <picker bindchange="bindIdx1Change" value="{{idx1}}" range="{{pointList}}">
+        <view class="picker">
+          <text>{{pointList[idx1]}}</text>
+          <image src="/imgs/question/icon_down.png"></image>
+        </view>
+      </picker>
+    </view>
+  </view>
+  <view class="item-wrapper">
+    <view class="label">产品设计</view>
+    <view class="input">
+      <picker bindchange="bindIdx2Change" value="{{idx2}}" range="{{pointList}}">
+        <view class="picker">
+          <text>{{pointList[idx2]}}</text>
+          <image src="/imgs/question/icon_down.png"></image>
+        </view>
+      </picker>
+    </view>
+  </view>
+  <view class="item-wrapper">
+    <view class="label">成本适配</view>
+    <view class="input">
+      <picker bindchange="bindIdx3Change" value="{{idx3}}" range="{{pointList}}">
+        <view class="picker">
+          <text>{{pointList[idx3]}}</text>
+          <image src="/imgs/question/icon_down.png"></image>
+        </view>
+      </picker>
+    </view>
+  </view>
+  <view class="item-wrapper">
+    <view class="label">图纸符合</view>
+    <view class="input">
+      <picker bindchange="bindIdx4Change" value="{{idx4}}" range="{{pointList}}">
+        <view class="picker">
+          <text>{{pointList[idx4]}}</text>
+          <image src="/imgs/question/icon_down.png"></image>
+        </view>
+      </picker>
+    </view>
+  </view>
+  <view class="item-wrapper">
+    <view class="label">建筑质量</view>
+    <view class="input">
+      <picker bindchange="bindIdx5Change" value="{{idx5}}" range="{{pointList}}">
+        <view class="picker">
+          <text>{{pointList[idx5]}}</text>
+          <image src="/imgs/question/icon_down.png"></image>
+        </view>
+      </picker>
+    </view>
+  </view>
+  <view class="item-wrapper">
+    <view class="label">评语</view>
+    <view class="input">
+      <textarea name="content1" value="{{content1}}"></textarea>
+      <view bindtouchstart="bindSetContent1"
+        bindtouchend="bindTouchUp"
+        class="btn-speak">
+        <image src="/imgs/question/icon_1.png"></image>
+      </view>
+    </view>
+  </view>
+</view>
+
+<!-- <view class="description" wx:if="{{status == 1}}">
+  <view class="item-wrapper">
+    <view class="label">总评分数</view>
+    <view class="input">
+      <picker bindchange="bindIdx6Change" value="{{idx6}}" range="{{pointList}}">
+        <view class="picker">
+          <text>{{pointList[idx6]}}</text>
+          <image src="/imgs/question/icon_down.png"></image>
+        </view>
+      </picker>
+    </view>
+  </view>
+  <view class="item-wrapper">
+    <view class="label">评语</view>
+    <view class="input">
+      <textarea name="content2" value="{{content2}}"></textarea>
+      <view bindtouchstart="bindSetContent2"
+        bindtouchend="bindTouchUp"
+        class="btn-speak">
+        <image src="/imgs/question/icon_1.png"></image>
+      </view>
+    </view>
+  </view>
+</view> -->
+
+<view class="btn-wrapper">
+  <button form-type="submit" class="btn-login">
+    <image src="/imgs/question/icon_3.png"></image>
+    <text>提交</text>
+  </button>
+  <button form-type="reset" class="btn-logout">
+    <image src="/imgs/question/icon_4.png"></image>
+    <text>取消</text>
+  </button>
+</view>
+</form>

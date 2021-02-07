@@ -1,41 +1,57 @@
 <!--pages/tasklist/tasklist.wxml-->
 <view class="nav">
-  <view class="region">
-    <picker bindchange="bindRegionChange" value="{{regionIdx}}" range="{{regionList}}" range-key="name">
+  <view class="genre">
+    <picker bindchange="bindGenreChange" value="{{genreIdx}}" range="{{genreList}}" range-key="name">
       <view class="picker">
-        <text>{{regionList[regionIdx].name}}</text>
+        <text>{{genreList[genreIdx].name}}</text>
         <image src="/imgs/down.png"></image>
       </view>
     </picker>
   </view>
-  <view class="project">
-    <picker bindchange="bindProjectChange" value="{{proIdx}}" range="{{projectList}}" range-key="name">
+  <view class="batch">
+    <picker bindchange="bindBatchChange" value="{{batchIdx}}" range="{{batchList}}" range-key="name">
       <view class="picker">
-        <text>{{projectList[proIdx].name}}</text>
+        <text>{{batchList[batchIdx].name}}</text>
         <image src="/imgs/down.png"></image>
       </view>
     </picker>
   </view>
 </view>
 <view class="nav">
-  <view class="system">
-    <picker bindchange="bindSystemChange" value="{{sysIdx}}" range="{{systemList}}" range-key="name">
+  <view class="depart">
+    <picker bindchange="bindDepartChange" value="{{departIdx}}" range="{{departList}}" range-key="name">
       <view class="picker">
-        <text>{{systemList[sysIdx].name}}</text>
+        <text>{{departList[departIdx].name}}</text>
         <image src="/imgs/down.png"></image>
       </view>
     </picker>
   </view>
-  <view class="question">
-    <picker bindchange="bindQuesChange" value="{{quesIdx}}" range="{{quesList}}" range-key="name">
+  <view class="project">
+    <picker bindchange="bindProjectChange" value="{{projectIdx}}" range="{{projectList}}" range-key="name">
       <view class="picker">
-        <text>{{quesList[quesIdx].name}}</text>
+        <text>{{projectList[projectIdx].name}}</text>
+        <image src="/imgs/down.png"></image>
+      </view>
+    </picker>
+  </view>
+  <view class="status" wx:if="{{state == 3 || state == 5}}">
+    <picker bindchange="bindStatusChange" value="{{statusIdx}}" range="{{statusList}}" range-key="name">
+      <view class="picker">
+        <text>{{statusList[statusIdx].name}}</text>
+        <image src="/imgs/down.png"></image>
+      </view>
+    </picker>
+  </view>
+  <view class="status" wx:if="{{state == 1}}">
+    <picker bindchange="bindStatusChange" value="{{statusIdx}}" range="{{statusList}}" range-key="name">
+      <view class="picker">
+        <text>{{statusList[statusIdx].name}}</text>
         <image src="/imgs/down.png"></image>
       </view>
     </picker>
   </view>
 </view>
-<view class="date-filter">
+<!-- <view class="date-filter">
   <view class="status" wx:if="{{!isEvaluate && isFb != 0}}">
     <picker bindchange="bindStatusChange" value="{{statusIdx}}" range="{{statusList}}" range-key="name">
       <view class="picker">
@@ -56,7 +72,7 @@
       <image src="/imgs/down.png"></image>
     </view>
   </picker>
-</view>
+</view> -->
 
 <view class="task-list">
   <checkbox-group bindchange="checkboxChange">
@@ -69,14 +85,22 @@
         <checkbox data-rid="{{item.id}}" value="{{item.id}}"></checkbox>
       </view>
       <view class="task-item" 
-      bindtap="viewReport" data-rid="{{item.id}}" data-isfb="{{item.is_fb}}">
-        <view class="title">
-          <text>{{item.name}}</text>
-          <text wx:if="{{item.label}}" class="co-red">{{item.label}}</text>
-          <text wx:if="{{item.label1}}" class="co-green">{{item.label1}}</text>
-        </view>
-        <view class="note">
-          <text>任务生成时间：{{item.task_time}}</text>
+      bindtap="viewDetail" data-rid="{{item.id}}">
+        <text class="name">{{item.xmmc}}</text>
+        <text class="title">{{item.title}}</text>
+        <view class="bottom-wrapper">
+          <view class="time">
+            <text>时间安排：{{item.task_time}}</text>
+            <text>巡检时间：{{item.inspect_time}}</text>
+          </view>
+          <view class="status-wrapper">
+            <view class="btn" wx:if="{{item.jurisdiction && item.status == 1}}" data-info="{{item}}" catchtap="updateStatus">开始巡检</view>
+            <view class="btn" wx:if="{{item.jurisdiction && item.status == 2}}" data-info="{{item}}" catchtap="updateStatus">暂停巡检</view>
+            <view>
+              <text class="flag active" wx:if="{{item.flag == '已开始'}}">{{item.flag}}</text>
+              <text class="flag inactive" wx:else>{{item.flag}}</text>
+            </view>
+          </view>
         </view>
       </view>
     </view>

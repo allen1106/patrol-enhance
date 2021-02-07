@@ -7,22 +7,18 @@ const app = getApp()
 
 Page({
   data: {
-    date: null,
-    workDay: null,
     showLogin: true,
-    taskNum: 0
+    userInfo: null
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    var curTime = new Date();
-    var curDate = util.formatCNDate(curTime);
-    this.setData({
-      date: curDate,
-      workDay: util.formatWorkDay(curTime)
-    })
+  },
+
+  onShow: function () {
+    var that = this
     // 提示用户先进行登录
     var userBind = wx.getStorageSync('userBind')
     if (userBind) {
@@ -30,10 +26,6 @@ Page({
         showLogin: false
       })
     }
-  },
-
-  onShow: function () {
-    var that = this
     var userId = wx.getStorageSync('userId')
     var userBind = wx.getStorageSync('userBind')
     if (userBind) {
@@ -45,17 +37,8 @@ Page({
         },
         success: function (res) {
           getApp().globalData.userInfo = res.data
-        }
-      })
-      api.phpRequest({
-        url: 'mail.php',
-        data: {
-          userid: userId
-        },
-        success: function (res) {
           that.setData({
-            taskNum: res.data.number,
-            showLogin: false
+            userInfo: res.data
           })
         }
       })
@@ -74,12 +57,12 @@ Page({
       })
     } else {
       wx.navigateTo({
-        url: '/pages/tasklist/tasklist?isEvaluate=0&isfb=' + e.currentTarget.dataset.isfb,
+        url: '/pages/tasklist/tasklist?state=' + e.currentTarget.dataset.state + '&title=' + e.currentTarget.dataset.title,
       })
     }
   },
 
-  navigateToEvaluate: function (e) {
+  navigateToPost: function (e) {
     if (this.data.showLogin) {
       wx.showToast({
         title: '尚未登录',
@@ -87,7 +70,7 @@ Page({
       })
     } else {
       wx.navigateTo({
-        url: '/pages/tasklist/tasklist?isEvaluate=1&isfb=' + e.currentTarget.dataset.isfb,
+        url: '/pages/question/question',
       })
     }
   },
@@ -101,19 +84,6 @@ Page({
     } else {
       wx.navigateTo({
         url: '/pages/statistics/statistics?tab=' + e.currentTarget.dataset.tab,
-      })
-    }
-  },
-
-  navigateToReport: function (e) {
-    if (this.data.showLogin) {
-      wx.showToast({
-        title: '尚未登录',
-        icon: 'error',
-      })
-    } else {
-      wx.navigateTo({
-        url: '/pages/report/report?id=' + e.currentTarget.dataset.id,
       })
     }
   },

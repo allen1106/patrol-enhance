@@ -3,88 +3,91 @@ page {
   font-size: 24rpx;
 }
 
-.container {
-  width: 90%;
+button:not([size='mini']) {
   padding: 0;
-  margin: 50rpx 5%;
-  border-radius: 20rpx;
-  box-shadow: 0 5rpx 10rpx 2rpx #4876FF ;
+  margin: 0;
 }
 
-picker {
+.header {
   width: 100%;
+}
+
+.header image {
+  width: 100%;
+}
+
+.container {
+  position: fixed;
+  top: 100rpx;
+  left: 5%;
+  width: 90%;
+  height: inherit;
+  padding: 30rpx 10%;
+  background-clip: padding-box;
+  background-color: #fff;
+  border-radius: 10rpx;
+  box-shadow:rgba(0,0,0,.3) 0px 0px 15px;
 }
 
 .input-wrapper {
   display: flex;
-  width: 90%;
-  height: 80rpx;
-  margin: auto;
-  padding: 20rpx 0;
-  border-bottom: 5rpx solid #EAE7E8;
+  flex-direction: row;
   align-items: center;
+  justify-content: space-between;
+  margin-top: 30rpx;
+  width: 100%;
+  height: 80rpx;
+  align-items: center;
+  border-bottom: 2rpx solid #EAE7E8;
+}
+
+.input-wrapper image {
+  width: 30rpx;
 }
 
 .input-wrapper input {
-  margin-left: 5%;
-  width: calc(100% - 50rpx);
+  margin-left: 30rpx;
+  width: calc(100% - 60rpx);
+  font-size: 28rpx;
 }
 
-.input-wrapper image{
-  width: 50rpx;
-  height: 50rpx;
-  margin: 0 20rpx;
-}
-
-.verify {
-  display: flex;
-  align-items: center;
-}
-
-.verify  input {
-  width: 50%;
-}
-
-.verify button:not([size='mini']) {
-  margin: 0;
-  width: 50%;
+.input-wrapper picker {
+  width: calc(100% - 60rpx);
   height: 80rpx;
-  line-height: 50rpx;
-  background-color: #4876FF;
-  color: #fff;
-  border-radius: 80rpx;
-  font-size: 30rpx;
+}
+.input-wrapper picker .picker {
+  width: 100%;
+  height: 80rpx;
+  display: flex;
+  align-items: center;
+}
+.input-wrapper picker .picker text {
+  margin-left: 30rpx;
+  font-size: 28rpx;
+  color: gray;
 }
 
-.menu-wrapper {
-  display: flex;
+.btn-login:not([size='mini']) {
+  margin-top: 100rpx;
+  width: 100%;
+  height: 70rpx;
+  line-height: 70rpx;
+  background-color: #009EFF;
+  color: #fff;
+  border-radius: 70rpx;
+  font-size: 28rpx;
+}
+
+.link-wrapper {
+  margin: 50rpx;
   width: 90%;
-  height: 100rpx;
-  margin: 0 auto;
-  align-items: center;
-}
-
-.menu-wrapper view {
+  font-size: 28rpx;
   display: flex;
-  width: 50%;
-  height: 100%;
-  color: #9999A6;
+  flex-direction: row;
   align-items: center;
+  justify-content: center;
 }
 
-.menu-wrapper view image {
-  width: 51rpx;
-  height: 63rpx;
-  margin: 0 20rpx;
-}
-
-.menu-wrapper button {
-  padding: 0;
-  width: 50%;
-  height: 100rpx;
-  line-height: 100rpx;
-  background-color: #4876FF;
-  color: #fff;
-  border-radius: 20rpx;
-  font-size: 36rpx;
+.link-wrapper .register {
+  color: #009EFF;
 }

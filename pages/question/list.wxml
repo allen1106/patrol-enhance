@@ -1,0 +1,102 @@
+<!--pages/question/list.wxml-->
+<view class="nav">
+  <view class="area">
+    <picker bindchange="bindAreaChange" value="{{areaIdx}}" range="{{areaList}}" range-key="name">
+      <view class="picker">
+        <text>{{areaList[areaIdx].name}}</text>
+        <image src="/imgs/down.png"></image>
+      </view>
+    </picker>
+  </view>
+  <view class="industry">
+    <picker bindchange="bindIndustryChange" value="{{industryIdx}}" range="{{industryList}}" range-key="name">
+      <view class="picker">
+        <text>{{industryList[industryIdx].name}}</text>
+        <image src="/imgs/down.png"></image>
+      </view>
+    </picker>
+  </view>
+  <view class="system">
+    <picker bindchange="bindSystemChange" value="{{systemIdx}}" range="{{systemList}}" range-key="name">
+      <view class="picker">
+        <text>{{systemList[systemIdx].name}}</text>
+        <image src="/imgs/down.png"></image>
+      </view>
+    </picker>
+  </view>
+</view>
+<view class="nav">
+  <view class="assess">
+    <picker bindchange="bindAssessChange" value="{{assessIdx}}" range="{{assessList}}" range-key="name">
+      <view class="picker">
+        <text>{{assessList[assessIdx].name}}</text>
+        <image src="/imgs/down.png"></image>
+      </view>
+    </picker>
+  </view>
+  <view class="problem">
+    <picker bindchange="bindProblemChange" value="{{problemIdx}}" range="{{problemList}}" range-key="name">
+      <view class="picker">
+        <text>{{problemList[problemIdx].name}}</text>
+        <image src="/imgs/down.png"></image>
+      </view>
+    </picker>
+  </view>
+</view>
+
+<view class="task-list">
+  <checkbox-group bindchange="checkboxChange">
+  <block wx:for="{{submitList}}" wx:key="item">
+    <view
+      class="item-wrapper"
+      bindlongpress="showCheckbox"
+    >
+      <view class="task-menu" wx:if="{{showCheckbox}}">
+        <checkbox data-rid="{{item.id}}" value="{{item.id}}"></checkbox>
+      </view>
+      <view class="task-item" 
+      bindtap="viewDetail" data-rid="{{item.id}}">
+        <text class="name">{{item.name}}</text>
+        <view>
+          <text class="time">创建时间：{{item.task_time}}</text>
+        </view>
+      </view>
+    </view>
+  </block>
+  </checkbox-group>
+</view>
+
+<block wx:if="{{isself == 1}}">
+  <view class="btn-wrapper" wx:if="{{showCheckbox}}">
+    <view class="btn-cancel" bindtap="hideCheckbox">
+      <image src="/imgs/report/cancel.png"></image>
+      <text>取消</text>
+    </view>
+    <view class="btn-download" bindtap="bindDelete">
+      <image src="/imgs/close.png"></image>
+      <text>删除</text>
+    </view>
+  </view>
+</block>
+<block wx:if="{{isdown == 1 && showCheckbox}}">
+  <view class="btn-wrapper" wx:if="{{taskInfo.file && taskInfo.file_1}}">
+    <view class="btn-download" bindtap="bindBatchDownload">
+      <image src="/imgs/project/icon_download.png"></image>
+      <text>重新生成</text>
+    </view>
+    <view class="btn-download" bindtap="downloadReport" data-id="0">
+      <image src="/imgs/project/icon_download.png"></image>
+      <text>简化版</text>
+    </view>
+    <view class="btn-download" bindtap="downloadReport" data-id="1">
+      <image src="/imgs/project/icon_download.png"></image>
+      <text>完整版</text>
+    </view>
+  </view>
+  <view class="btn-wrapper" wx:else>
+    <view class="btn-download" bindtap="bindBatchDownload">
+      <image src="/imgs/project/icon_download.png"></image>
+      <text>生成报告并下载</text>
+    </view>
+  </view>
+</block>
