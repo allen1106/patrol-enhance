@@ -1,6 +1,8 @@
 <!--pages/comment/comment.wxml-->
 <view class="page-wrapper">
 <view class="header bg">
+  <text class="bold big">{{info.xmmc}}</text>
+  <text class="bold">{{info.rwmc}}</text>
   <view class="swiper-wrapper">
     <view class="swiper {{currentTab == 0 ? 'active':'inactive'}}" bindtap="bindSwtichNav" data-tab="0">评价</view>
     <view class="swiper {{currentTab == 1 ? 'active':'inactive'}}" bindtap="bindSwtichNav" data-tab="1">得分表</view>
@@ -36,26 +38,34 @@
       <view class="tr">
         <view class="two-td">
           <view class="td">角色</view>
-          <view class="td">姓名</view>
+          <view class="td wide">姓名</view>
         </view>
         <view class="td">产品定位</view>
         <view class="td">产品设计</view>
         <view class="td">成本适配</view>
         <view class="td">图纸符合</view>
         <view class="td">建筑质量</view>
+        <view class="td wide">姓名</view>
         <view class="td">小计</view>
+        <view class="td wide">权重</view>
       </view>
       <view class="tr" wx:for="{{scoreList}}" wx:key="item">
         <view class="two-td">
           <view class="td">{{item.name}}</view>
-          <view class="td">{{item.realname}}</view>
+          <view class="td wide">{{item.realname}}</view>
         </view>
         <view class="td">{{item.leixing_1}}</view>
         <view class="td">{{item.leixing_2}}</view>
         <view class="td">{{item.leixing_3}}</view>
         <view class="td">{{item.leixing_4}}</view>
         <view class="td">{{item.leixing_5}}</view>
+        <view class="td wide">{{item.realname}}</view>
         <view class="td">{{item.count_leixing}}</view>
+        <view class="td wide" wx:if="{{canUpdate}}">
+          <input type="digit" bindblur="bindInputWeight" data-id="{{item.id}}" value="{{item.weight}}" name="weight"></input>
+          <!-- <text bindtap="updateWeight" data-id="{{item.id}}">更新</text> -->
+        </view>
+        <view class="td wide" wx:else>{{item.weight}}</view>
       </view>
       <view class="tr">
         <view class="two-td">
@@ -66,7 +76,12 @@
         <view class="td">{{count3}}</view>
         <view class="td">{{count4}}</view>
         <view class="td">{{count5}}</view>
+        <view class="td wide">合计</view>
         <view class="td">{{count6}}</view>
+        <view class="td wide">{{weightCount}}</view>
+      </view>
+      <view class="total-result">
+        换算得分：{{count7}}
       </view>
     </scroll-view>
   </view>

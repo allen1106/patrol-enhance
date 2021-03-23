@@ -87,15 +87,21 @@
       <view class="task-item" 
       bindtap="viewDetail" data-rid="{{item.id}}">
         <text class="name">{{item.xmmc}}</text>
-        <text class="title">{{item.title}}</text>
         <view class="bottom-wrapper">
           <view class="time">
-            <text>时间安排：{{item.task_time}}</text>
-            <text>巡检时间：{{item.inspect_time}}</text>
+            <text class="title">{{item.title}}</text>
           </view>
           <view class="status-wrapper">
             <view class="btn" wx:if="{{item.jurisdiction && item.status == 1}}" data-info="{{item}}" catchtap="updateStatus">开始巡检</view>
             <view class="btn" wx:if="{{item.jurisdiction && item.status == 2}}" data-info="{{item}}" catchtap="updateStatus">暂停巡检</view>
+          </view>
+        </view>
+        <view class="bottom-wrapper">
+          <view class="time">
+            <text>时间安排：{{item.task_time}}</text>
+            <text>巡检时间：{{item.inspect_time || ''}}</text>
+          </view>
+          <view class="status-wrapper">
             <view>
               <text class="flag active" wx:if="{{item.flag == '已开始'}}">{{item.flag}}</text>
               <text class="flag inactive" wx:else>{{item.flag}}</text>

@@ -31,6 +31,7 @@ Page({
     touchStart: 0,
     touchEnd: 0,
     canUpdateStatus: 0,
+    flagList: ["待巡检", "进行中", "已结束"]
   },
 
   /**
@@ -328,8 +329,11 @@ Page({
           })
           for (let i in that.data.submitList) {
             if (that.data.submitList[i].id == info.id) {
-              that.data.submitList[i].status = info.status == 1 ? 2 : 1
-              that.data.submitList[i].flag = res.data.flag
+              that.data.submitList[i].status = res.data.flag
+              that.data.submitList[i].flag = that.data.flagList[that.data.submitList[i].status - 1]
+              that.setData({
+                submitList: that.data.submitList
+              })
             }
           }
         } else {
