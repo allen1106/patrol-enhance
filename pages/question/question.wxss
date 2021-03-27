@@ -90,6 +90,9 @@ page {
   height: 80rpx;
   width: 100%;
 }
+.item-wrapper .input textarea.high {
+  height: 120rpx;
+}
 .item-wrapper .input text {
   display: inline-block;
   word-wrap: break-word; 
@@ -183,7 +186,8 @@ page {
   font-size: 36rpx;
 }
 
-.btn-logout {
+.btn-wrapper button:nth-child(2),
+.btn-wrapper button:nth-child(3) {
   border-left: gray solid 1rpx;
 }
 

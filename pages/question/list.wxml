@@ -42,6 +42,14 @@
       </view>
     </picker>
   </view>
+  <view class="status">
+    <picker bindchange="bindStatusChange" value="{{statusIdx}}" range="{{statusList}}" range-key="name">
+      <view class="picker">
+        <text>{{statusList[statusIdx].name}}</text>
+        <image src="/imgs/down.png"></image>
+      </view>
+    </picker>
+  </view>
 </view>
 
 <view class="task-list">
@@ -59,6 +67,7 @@
         <text class="name">{{item.name}}</text>
         <view>
           <text class="time">创建时间：{{item.task_time}}</text>
+          <text class="label">{{item.label}}</text>
         </view>
       </view>
     </view>
@@ -78,7 +87,7 @@
     </view>
   </view>
 </block>
-<block wx:if="{{isdown == 1 && showCheckbox}}">
+<block wx:if="{{isdown == 1 && showCheckbox && submitList.length > 0}}">
   <view class="btn-wrapper" wx:if="{{taskInfo.file && taskInfo.file_1}}">
     <view class="btn-download" bindtap="bindBatchDownload">
       <image src="/imgs/project/icon_download.png"></image>

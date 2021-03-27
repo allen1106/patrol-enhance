@@ -26,6 +26,9 @@ Page({
     problemList: [{"name": "请选择缺陷类别", "problem_id": 0}],
     problemIdx: 0,
     problemId: 0,
+    statusList: [{"name": "请选择状态", "flag": -1},{"name": "审核中", "flag": 0},{"name": "审核成功", "flag": 1},{"name": "审核失败", "flag": 2}],
+    statusIdx: 0,
+    statusId: -1,
     submitList: [],
     fileUrl: '',
     showCheckbox: 0,
@@ -41,12 +44,21 @@ Page({
     let isFb = Number(options.isfb) || 0
     let isself = Number(options.isself) || 0
     let isdown = Number(options.isdown) || 0
+    let hidedown = Number(options.hidedown) || 0
     that.setData({
       tid: tid,
       isFb: isFb,
       isself: isself,
-      isdown: isdown
+      isdown: isdown,
+      hidedown: hidedown
     })
+    if (isdown && !hidedown) {
+      that.setData({
+        statusList: [{"name": "审核成功", "flag": 1}],
+        statusIdx: 0,
+        statusId: 1
+      })
+    }
     
     api.phpRequest({
       url: 'project_list.php',
@@ -59,7 +71,7 @@ Page({
         })
       }
     })
-    if (isdown) {that.setData({showCheckbox: true})}
+    if (isdown && !hidedown) {that.setData({showCheckbox: true})}
     that.fetchAreaList()
     that.fetchIndustryList()
     that.fetchAssessList()
@@ -213,6 +225,15 @@ Page({
     }, that.fetchTaskList)
   },
 
+  bindStatusChange: function (e) {
+    var idx = e.detail.value
+    var that = this
+    that.setData({
+      statusIdx: idx,
+      statusId: that.data.statusList[idx].flag
+    }, that.fetchTaskList)
+  },
+
   initSystemList: function (fn) {
     this.setData({
       systemList: [{"name": "请选择系统", "problem_id": 0}],
@@ -242,12 +263,16 @@ Page({
     if (!that.data.isdown) {
       data['userid'] = wx.getStorageSync("userId")
     }
+    if (that.data.hidedown) {
+      data['shrid'] = wx.getStorageSync("userId")
+    }
     console.log(that.data)
     if (that.data.areaId != 0) {data["area_id"] = that.data.areaId}
     if (that.data.industryId != 0) {data["industry_id"] = that.data.industryId}
     if (that.data.systemId != 0) {data["system_id"] = that.data.systemId}
     if (that.data.assessId != 0) {data["assess_id"] = that.data.assessId}
     if (that.data.problemId != 0) {data["problem_id"] = that.data.problemId}
+    if (that.data.statusId != -1) {data["flag"] = that.data.statusId}
     data["is_fb"] = that.data.isFb
     api.phpRequest({
       url: 'report.php',

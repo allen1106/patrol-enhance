@@ -31,7 +31,8 @@ Page({
     touchStart: 0,
     touchEnd: 0,
     canUpdateStatus: 0,
-    flagList: ["待巡检", "进行中", "已结束"]
+    flagList: ["待巡检", "进行中", "已结束"],
+    currentTab: 0,
   },
 
   /**
@@ -250,6 +251,10 @@ Page({
       wx.navigateTo({
         url: '/pages/question/list?tid=' + rid + '&isfb=1' + '&isdown=1'
       })
+    } else if (this.data.state == 9) {
+      wx.navigateTo({
+        url: '/pages/question/list?tid=' + rid + '&isfb=1' + '&isdown=1' + '&hidedown=1'
+      })
     } else if (this.data.state == 7) {
       wx.navigateTo({
         url: '/pages/question/list?tid=' + rid + '&isfb=0' + '&isself=1'
@@ -344,5 +349,13 @@ Page({
         }
       }
     })
+  },
+  
+  bindSwtichNav: function (e) {
+    let that = this
+    let state = Number(e.currentTarget.dataset.state)
+    this.setData({
+      state: state
+    }, that.fetchTaskList)
   }
 })

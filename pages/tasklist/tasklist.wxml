@@ -1,4 +1,13 @@
 <!--pages/tasklist/tasklist.wxml-->
+<view class="header bg" wx:if="{{state==4 || state==9}}">
+  <text class="bold">绿鉴</text>
+  <text class="bold">绿地集团产品力评价系统</text>
+  <view class="swiper-wrapper">
+    <view class="swiper {{state == 4 ? 'active':'inactive'}}" bindtap="bindSwtichNav" data-state="4">巡检报告</view>
+    <view class="swiper {{state == 9 ? 'active':'inactive'}}" bindtap="bindSwtichNav" data-state="9">待审核</view>
+  </view>
+</view>
+
 <view class="nav">
   <view class="genre">
     <picker bindchange="bindGenreChange" value="{{genreIdx}}" range="{{genreList}}" range-key="name">
@@ -51,28 +60,6 @@
     </picker>
   </view>
 </view>
-<!-- <view class="date-filter">
-  <view class="status" wx:if="{{!isEvaluate && isFb != 0}}">
-    <picker bindchange="bindStatusChange" value="{{statusIdx}}" range="{{statusList}}" range-key="name">
-      <view class="picker">
-        <text>{{statusList[statusIdx].name}}</text>
-        <image src="/imgs/down.png"></image>
-      </view>
-    </picker>
-  </view>
-  <picker mode="date" bindchange="bindStartChange" value="{{startDate}}" start="1990-01-01" end="{{currentDate}}">
-    <view class="picker">
-      <text>{{startDate}}</text>
-      <image src="/imgs/down.png"></image>
-    </view>
-  </picker>
-  <picker mode="date" bindchange="bindEndChange" value="{{endDate}}" start="1990-01-01" end="{{currentDate}}">
-    <view class="picker">
-      <text>{{endDate}}</text>
-      <image src="/imgs/down.png"></image>
-    </view>
-  </picker>
-</view> -->
 
 <view class="task-list">
   <checkbox-group bindchange="checkboxChange">

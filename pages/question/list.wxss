@@ -46,6 +46,10 @@
   font-size: 28rpx;
   color: rgba(0,0,0,.4);
 }
+.task-item .label {
+  font-size: 24rpx;
+  color: red;
+}
 .task-item .flag.active {
   font-size: 28rpx;
   color: #006ec5;

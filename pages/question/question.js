@@ -228,6 +228,19 @@ Page({
           })
         }
       })
+      api.phpRequest({
+        url: 'jurisdiction.php',
+        data: {
+          userid: wx.getStorageSync('userId'),
+          state: 8,
+          task_id: pid,
+        },
+        success: function (res) {
+          that.setData({
+            canReject: res.data.status
+          })
+        }
+      })
     }
   },
 
@@ -743,7 +756,7 @@ Page({
     if (!data['industry_id']) return '专业'
     // if (!data['system_id']) return '系统'
     if (!data['assess_id']) return '评价维度'
-    // if (!data['problem_id']) return '缺陷类别'
+    if (!data['problem_id']) return '缺陷类别'
     if (!data['question']) return '问题描述'
     if (!data['solve']) return '整改建议'
     if (!data['distribution']) return '数量分布'
@@ -835,21 +848,46 @@ Page({
 
   bindSubmitComment: function (e) {
     var that = this
-    var value = e.detail.value
-    if (!value.comment) {
-      wx.showToast({
-        title: '请输入回复内容',
-        icon: 'none',
-      })
-      return
-    }
-    let data = {
-      'userid': wx.getStorageSync('userId'),
-      'report_id': that.data.id,
-      'content': value.comment,
+    console.log(e)
+    let value = e.detail.value
+    let submitType = Number(e.detail.target.dataset.id)
+    let data = null
+    if (submitType == 1) {
+      if (!value.comment) {
+        wx.showToast({
+          title: '请输入回复内容',
+          icon: 'none',
+        })
+        return
+      }
+      data = {
+        'userid': wx.getStorageSync('userId'),
+        'report_id': that.data.id,
+        'content': value.comment,
+      }
+    } else if (submitType == 2) {
+      if (!value.reject) {
+        wx.showToast({
+          title: '请输入驳回原因',
+          icon: 'none',
+        })
+        return
+      }
+      data = {
+        'userid': wx.getStorageSync('userId'),
+        'report_id': that.data.id,
+        'content': value.reject,
+        'flag': 2
+      }
+    } else {
+      data = {
+        'userid': wx.getStorageSync('userId'),
+        'report_id': that.data.id,
+        'flag': 1
+      }
     }
     api.phpRequest({
-      url: 'evaluate_save.php',
+      url:  submitType == 1 ? 'evaluate_save.php' : 'report_result.php',
       data: data,
       method: 'post',
       header: {'content-type': 'application/x-www-form-urlencoded'},

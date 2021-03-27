@@ -26,13 +26,6 @@
       </view>
       <text class="tip-msg">待评价+{{userInfo.data_3}}</text>
     </view>
-    <!-- <view class="menu-item" bindtap="navigateToTaskList" data-state="2" data-title="已巡检任务">
-      <view class="img-wrapper">
-        <image src="/imgs/index/menu_2.png" mode="heightFix"></image>
-        <text class="text-wrapper">已巡检任务</text>
-      </view>
-      <text class="tip-msg">任务+{{userInfo.data_2}}</text>
-    </view> -->
     </view>
     <view class="menu-line">
     <view class="menu-item" bindtap="navigateToPost" data-state="2">
@@ -40,7 +33,7 @@
         <image src="/imgs/index/menu_2.png" mode="heightFix"></image>
         <text class="text-wrapper">问题录入</text>
       </view>
-      <text class="tip-msg"></text>
+      <text class="tip-msg">驳回+{{userInfo.data_10}}</text>
     </view>
     <view class="menu-item" bindtap="navigateToTaskList" data-state="7" data-title="查看草稿箱">
       <view class="img-wrapper">
@@ -57,16 +50,10 @@
         <text class="text-wrapper">巡检报告</text>
       </view>
       <view class="tip-msg two-tip">
-        <text>待生成+{{userInfo.data_5}}</text>
+        <text class="tip-msg">待生成+{{userInfo.data_5}}</text>
+        <text class="tip-msg">待审核+{{userInfo.data_9}}</text>
       </view>
     </view>
-    <!-- <view class="menu-item" bindtap="navigateToTaskList" data-state="5" data-title="任务回复">
-      <view class="img-wrapper">
-        <image src="/imgs/index/menu_5.png" mode="heightFix"></image>
-        <text class="text-wrapper">任务回复</text>
-      </view>
-      <text class="tip-msg">待回复任务+{{userInfo.data_4}}</text>
-    </view> -->
     <view class="menu-item" data-tab="1">
       <view class="img-wrapper">
         <image src="/imgs/index/menu_6.png" mode="heightFix"></image>
