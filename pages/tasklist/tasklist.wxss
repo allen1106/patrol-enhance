@@ -98,6 +98,12 @@
   font-size: 40rpx;
   color: #0073CC;
 }
+.task-item .label {
+  background-color: orange;
+  color: #fff;
+  font-size: 24rpx;
+  padding: 5rpx 10rpx;
+}
 .task-item .title {
   font-size: 32rpx;
   color: #585858;

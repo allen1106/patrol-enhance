@@ -100,15 +100,9 @@ Page({
           count5 += Number(res.data[i].leixing_5)
           count6 += Number(res.data[i].count_leixing)
           weightCount += Number(res.data[i].weight)
-          totalWeight += Number(res.data[i].weight * res.data[i].count_leixing)
+          totalWeight += Number(res.data[i].weight * res.data[i].count_leixing / 25 * 100)
         }
         
-        for (var i in that.data.scoreList) {
-          // totalWeight += Number(that.data.scoreList[i].weight * that.data.scoreList[i].count_leixing)
-          if (that.data.scoreList[i].id == id) {
-            weight = Number(that.data.scoreList[i].weight)
-          }
-        }
         that.setData({
           scoreList: res.data,
           count1: count1,
@@ -117,8 +111,8 @@ Page({
           count4: count4,
           count5: count5,
           count6: count6,
-          weightCount: weightCount,
-          count7: (totalWeight / weightCount).toFixed(2),
+          weightCount: weightCount.toFixed(2),
+          count7: totalWeight.toFixed(2),
         })
       }
     })
@@ -171,7 +165,7 @@ Page({
     let totalWeight = 0
     for (var i in that.data.scoreList) {
       weightCount += Number(that.data.scoreList[i].weight)
-      totalWeight += Number(that.data.scoreList[i].weight * that.data.scoreList[i].count_leixing)
+      totalWeight += Number(that.data.scoreList[i].weight * that.data.scoreList[i].count_leixing / 25 * 100)
       if (that.data.scoreList[i].id == id) {
         weight = Number(that.data.scoreList[i].weight)
       }
@@ -192,8 +186,8 @@ Page({
             icon: 'success',
           })
           that.setData({
-            weightCount: weightCount,
-            count7: (totalWeight / weightCount).toFixed(2)
+            weightCount: weightCount.toFixed(2),
+            count7: totalWeight.toFixed(2)
           })
         } else {
           wx.showToast({

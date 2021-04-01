@@ -57,7 +57,7 @@
   <block wx:for="{{submitList}}" wx:key="item">
     <view
       class="item-wrapper"
-      bindlongpress="showCheckbox"
+      bindlongpress="{{showCheckbox ? 'bindShowCheckbox' : ''}}"
     >
       <view class="task-menu" wx:if="{{showCheckbox}}">
         <checkbox data-rid="{{item.id}}" value="{{item.id}}"></checkbox>
@@ -77,7 +77,7 @@
 
 <block wx:if="{{isself == 1}}">
   <view class="btn-wrapper" wx:if="{{showCheckbox}}">
-    <view class="btn-cancel" bindtap="hideCheckbox">
+    <view class="btn-cancel" bindtap="bindHideCheckbox">
       <image src="/imgs/report/cancel.png"></image>
       <text>取消</text>
     </view>

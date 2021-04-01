@@ -54,7 +54,6 @@ Page({
     image1List: [],
     comments: [],
     canComment: 0,
-    canSubmit: 1,
   },
 
   /**
@@ -734,9 +733,6 @@ Page({
             title: '提交成功',
             icon: 'success',
             success: function () {
-              that.setData({
-                canSubmit: 1
-              })
               setTimeout(that.bindBackToIndex, 1500);
             }
           })
@@ -764,14 +760,15 @@ Page({
     return 'success'
   },
 
+  validateInfo1: function (data) {
+    if (!data['question']) return '问题描述'
+    return 'success'
+  },
+
   bindSubmitForm: function (e) {
     var value = e.detail.value
     var btnId = e.detail.target.dataset.id
     var that = this
-    if (!that.data.canSubmit) {return}
-    that.setData({
-      canSubmit: 0
-    })
     if (btnId == "2") {
       that.handleSuccess()
       return
@@ -801,7 +798,12 @@ Page({
       degree: that.data.degreeId,
       report_id: that.data.id,
     }
-    var valid = that.validateInfo(data)
+    var valid = 'success'
+    if (btnId == 1) {
+      valid = that.validateInfo(data)
+    } else {
+      valid = that.validateInfo1(data)
+    }
     if (valid != "success") {
       wx.showToast({
         title: valid + '不能为空',

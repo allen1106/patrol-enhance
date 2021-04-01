@@ -119,9 +119,13 @@ Page({
       that.setData({
         fileUrl: that.data.info.file_1
       }, that.openFile)
-    } else {
+    } else if (typeId == 0) {
       that.setData({
         fileUrl: that.data.info.file
+      }, that.openFile)
+    } else {
+      that.setData({
+        fileUrl: that.data.info.file_2
       }, that.openFile)
     }
   },

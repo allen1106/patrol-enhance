@@ -17,7 +17,7 @@ Page({
     industryId: 0,
     content1: '',
     content2: '',
-    pointList: [10, 9, 8, 7, 6, 5, 4, 3, 2, 1],
+    pointList: [5, 4, 3, 2, 1],
     idx1: 2,
     idx2: 2,
     idx3: 2,

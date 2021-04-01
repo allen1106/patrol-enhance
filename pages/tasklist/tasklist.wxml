@@ -73,7 +73,10 @@
       </view>
       <view class="task-item" 
       bindtap="viewDetail" data-rid="{{item.id}}">
-        <text class="name">{{item.xmmc}}</text>
+        <view class="bottom-wrapper">
+          <text class="name">{{item.xmmc}}</text>
+          <text class="label" wx:if="{{item.label}}">{{item.label}}</text>
+        </view>
         <view class="bottom-wrapper">
           <view class="time">
             <text class="title">{{item.title}}</text>

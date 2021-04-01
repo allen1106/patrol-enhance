@@ -296,12 +296,12 @@ Page({
     })
   },
 
-  showCheckbox: function () {
+  bindShowCheckbox: function () {
     this.setData({
       showCheckbox: true
     })
   },
-  hideCheckbox: function () {
+  bindHideCheckbox: function () {
     this.setData({
       showCheckbox: false
     })

@@ -158,6 +158,12 @@
         <text>{{info.dqsj}}</text>
       </view>
     </view>
+    <view class="item-wrapper download-link" wx:if="{{state == 1 && info.file_2}}">
+      <view class="text-wrapper">
+        <image src="/imgs/project/icon_download.png"></image>
+        <view data-id="2" bindtap="downloadReport">事业部自检报告</view>
+      </view>
+    </view>
     <view class="item-wrapper download-link" wx:if="{{state == 1}}">
       <view class="text-wrapper" wx:if="{{info.file}}">
         <image src="/imgs/project/icon_download.png"></image>
