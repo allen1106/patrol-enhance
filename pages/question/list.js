@@ -71,7 +71,7 @@ Page({
         })
       }
     })
-    if (isdown && !hidedown) {that.setData({showCheckbox: true})}
+    if ((isdown && !hidedown) || isself) {that.setData({showCheckbox: true})}
     that.fetchAreaList()
     that.fetchIndustryList()
     that.fetchAssessList()
@@ -283,8 +283,15 @@ Page({
         if (concatFlag) {
           list = that.data.submitList.concat(list)
         }
+        let list1 = []
+        for (let i in list) {
+          for (let j in [1, 2, 3]) {
+            list1.push(list[i])
+          }
+        }
+        list1.pop()
         that.setData({
-          submitList: list
+          submitList: list1
         })
       }
     })
@@ -322,7 +329,7 @@ Page({
         wx.showToast({
           title: '删除成功',
         })
-        that.hideCheckbox()
+        that.bindHideCheckbox()
         that.fetchTaskList()
       }
     })
@@ -368,6 +375,36 @@ Page({
         // that.setData({
         //   fileUrl: res.data.file
         // }, that.openFile)
+      }
+    })
+  },
+
+  bindDownload: function () {
+    var that = this
+    if (that.data.reportIds.length == 0) {
+      wx.showToast({
+        title: '请选择问题',
+      })
+      return
+    }
+    var reportIds = that.data.reportIds.join(',')
+    api.phpRequest({
+      url: 'batch_download_1.php',
+      data: {
+        report_id_s: reportIds,
+        task_id: that.data.tid
+      },
+      success: function (res) {
+        if (res.data.status == 1) {
+          that.setData({
+            fileUrl: res.data.file
+          }, that.openFile)
+        } else {
+          wx.showToast({
+            title: '报告生成失败',
+            icon: 'none'
+          })
+        }
       }
     })
   },

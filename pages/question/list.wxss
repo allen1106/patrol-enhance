@@ -16,7 +16,8 @@
 
 .task-list {
   width: 90%;
-  margin: 20rpx auto 120rpx;
+  margin: 20rpx auto 0;
+  padding-bottom: 120rpx;
 }
 
 .item-wrapper {
@@ -138,7 +139,8 @@ checkbox .wx-checkbox-input.wx-checkbox-input-checked::before{
   font-size: 36rpx;
 }
 
-.btn-wrapper view:nth-child(2) {
+.btn-wrapper view:nth-child(2),
+.btn-wrapper view:nth-child(3) {
   border-left: 2rpx solid #EAE7E8;
 }
 

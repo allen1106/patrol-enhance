@@ -117,8 +117,8 @@ page {
 }
 
 .item-wrapper .input .btn-speak image {
-  width: 50rpx;
-  height: 50rpx;
+  width: 70rpx;
+  height: 70rpx;
 }
 
 .item-wrapper .img-preview-container image {

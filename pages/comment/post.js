@@ -137,6 +137,7 @@ Page({
         } else if (res.data.status == 2) {
           wx.showToast({
             title: '您已评价，无需重复评价',
+            icon: 'none',
             success: function () {
               setTimeout(that.bindBackToIndex, 1500);
             }

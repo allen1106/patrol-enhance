@@ -7,7 +7,6 @@
     "pages/personal/personal",
     "pages/tasklist/tasklist",
     "pages/logs/logs",
-    "pages/evaluate/evaluate",
     "pages/report/report",
     "pages/project/project",
     "pages/question/question",

@@ -54,7 +54,7 @@
         <text class="tip-msg">待审核+{{userInfo.data_9}}</text>
       </view>
     </view>
-    <view class="menu-item" data-tab="1">
+    <view class="menu-item" bindtap="navigateToStatistics">
       <view class="img-wrapper">
         <image src="/imgs/index/menu_6.png" mode="heightFix"></image>
         <text class="text-wrapper">图表统计</text>

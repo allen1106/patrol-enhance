@@ -32,9 +32,9 @@ Page({
         'id': tid,
       },
       success: function (res) {
-        if (res.data.img) {res.data.img = res.data.img.split(',')}
-        if (res.data.img1) {res.data.img1 = res.data.img1.split(',')}
-        if (res.data.img2) {res.data.img2 = res.data.img2.split(',')}
+        if (res.data.img) {res.data.img = res.data.img.split('|')}
+        if (res.data.img1) {res.data.img1 = res.data.img1.split('|')}
+        if (res.data.img2) {res.data.img2 = res.data.img2.split('|')}
         that.setData({
           tid: tid,
           state: state,

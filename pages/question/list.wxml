@@ -57,7 +57,7 @@
   <block wx:for="{{submitList}}" wx:key="item">
     <view
       class="item-wrapper"
-      bindlongpress="{{showCheckbox ? 'bindShowCheckbox' : ''}}"
+      bindlongpress="{{showCheckbox || isself ? 'bindShowCheckbox' : ''}}"
     >
       <view class="task-menu" wx:if="{{showCheckbox}}">
         <checkbox data-rid="{{item.id}}" value="{{item.id}}"></checkbox>
@@ -84,6 +84,10 @@
     <view class="btn-download" bindtap="bindDelete">
       <image src="/imgs/close.png"></image>
       <text>删除</text>
+    </view>
+    <view class="btn-download" bindtap="bindDownload" wx:if="{{isFb == 1}}">
+      <image src="/imgs/project/icon_download.png"></image>
+      <text>下载报告</text>
     </view>
   </view>
 </block>

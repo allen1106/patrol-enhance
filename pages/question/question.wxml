@@ -81,7 +81,7 @@
   <view class="item-wrapper">
     <view class="label">问题描述</view>
     <view class="input">
-      <textarea bindinput="bindInputQuestion" value="{{taskInfo.question || question || ''}}" name="question" wx:if="{{id==0 || isFb==0}}"></textarea>
+      <textarea class="high" bindinput="bindInputQuestion" value="{{taskInfo.question || question || ''}}" name="question" wx:if="{{id==0 || isFb==0}}"></textarea>
       <text wx:else>{{taskInfo.question || ''}}</text>
       <view bindtouchstart="bindSetQuestion"
         bindtouchend="bindTouchUp"
@@ -133,7 +133,7 @@
   <view class="item-wrapper">
     <view class="label">整改建议</view>
     <view class="input">
-      <textarea bindinput="bindInputSolve" value="{{taskInfo.solve || solve || ''}}" name="solve" wx:if="{{id==0 || isFb==0}}"></textarea>
+      <textarea class="high" bindinput="bindInputSolve" value="{{taskInfo.solve || solve || ''}}" name="solve" wx:if="{{id==0 || isFb==0}}"></textarea>
       <text wx:else>{{taskInfo.solve || ''}}</text>
       <view bindtouchstart="bindSetSolve"
         bindtouchend="bindTouchUp"
@@ -158,6 +158,13 @@
     <text>保存草稿</text>
   </button>
 </view>
+
+<view class="btn-wrapper" wx:if="{{isFb == 1 && isself == 1}}">
+  <button class="btn-login" bindtap="bindUpdate">
+    <image src="/imgs/question/icon_3.png"></image>
+    <text>修改</text>
+  </button>
+</view>
 </form>
 
 <form bindsubmit="bindSubmitComment" bindreset="bindBackToIndex" wx:if="{{isFb != 0}}">
@@ -167,17 +174,24 @@
     <view class="co-blue label">回复问题</view>
     <view class="item-wrapper">
       <view class="label">处理回复</view>
-      <view class="input"><textarea placeholder="请输入处理内容" name="comment"></textarea></view>
+      <view class="input"><textarea class="high" placeholder="请输入处理内容" name="comment"></textarea></view>
     </view>
   </block>
   <block wx:if="{{canReject && taskInfo.flag == 0}}">
     <view class="item-wrapper">
       <view class="label">驳回原因</view>
-      <view class="input"><textarea class="high" placeholder="请输入驳回原因" name="reject"></textarea></view>
+      <view class="input">
+        <textarea class="high" placeholder="请输入驳回原因" name="reject"></textarea>
+        <view bindtouchstart="bindSetReject"
+          bindtouchend="bindTouchUp"
+          class="btn-speak">
+          <image src="/imgs/question/icon_1.png"></image>
+        </view>
+      </view>
     </view>
   </block>
 </view>
-<view class="btn-wrapper">
+<view class="btn-wrapper" wx:if="{{isFb != 1 || isself != 1}}">
   <button form-type="submit" data-id="1"wx:if="{{isself == 0 && canComment}}">
     <image src="/imgs/question/icon_3.png"></image>
     <text>回复</text>

@@ -145,16 +145,134 @@ Page({
         solve: app.globalData.solve,
       })
     } else if (id != 0) {
+      // api.phpRequest({
+      //   url: 'report_list.php',
+      //   data: {
+      //     id: id
+      //   },
+      //   success: function (res) {
+      //     let taskInfo = res.data
+      //     that.setData({
+      //       id: id,
+      //       isFb: isFb,
+      //       taskInfo: taskInfo,
+      //       imageList: taskInfo.imgs ? taskInfo.imgs.split(',') : [],
+      //     })
+      //     let areaId = taskInfo.area_id
+      //     that.fetchAreaList((res) => {
+      //       let areaIdx = res.findIndex((item)=>item.area_id==areaId)
+      //       that.setData({
+      //         areaId: areaId,
+      //         areaIdx: areaIdx
+      //       })
+      //     })
+      //     let industryId = taskInfo.industry_id
+      //     that.fetchIndustryList((res) => {
+      //       let industryIdx = res.findIndex((item)=>item.industry_id==industryId)
+      //       that.setData({
+      //         industryId: industryId,
+      //         industryIdx: industryIdx
+      //       }, () => {
+      //         let systemId = taskInfo.system_id
+      //         that.fetchSystemList((res) => {
+      //           let systemIdx = res.findIndex((item)=>item.system_id==systemId)
+      //           that.setData({
+      //             systemId: systemId,
+      //             systemIdx: systemIdx
+      //           })
+      //         })
+      //       })
+      //     })
+      //     let assessId = taskInfo.assess_id
+      //     that.fetchAssessList((res) => {
+      //       let assessIdx = res.findIndex((item)=>item.assess_id==assessId)
+      //       that.setData({
+      //         assessId: assessId,
+      //         assessIdx: assessIdx
+      //       }, () => {
+      //         let problemId = taskInfo.problem_id
+      //         that.fetchProblemList((res) => {
+      //           let problemIdx = res.findIndex((item)=>item.problem_id==problemId)
+      //           that.setData({
+      //             problemId: problemId,
+      //             problemIdx: problemIdx
+      //           })
+      //         })
+      //       })
+      //     })
+      //     let distribution = taskInfo.distribution
+      //     let distributionIdx = that.data.distributionList.findIndex((item)=>item.distribution==distribution)
+      //     that.setData({
+      //       distributionId: distribution,
+      //       distributionIdx: distributionIdx
+      //     })
+      //     let degree = taskInfo.degree
+      //     let degreeIdx = that.data.degreeList.findIndex((item)=>item.degree==degree)
+      //     that.setData({
+      //       degreeId: degree,
+      //       degreeIdx: degreeIdx
+      //     })
+      //   }
+      // })
+      api.phpRequest({
+        url: 'jurisdiction.php',
+        data: {
+          userid: wx.getStorageSync('userId'),
+          state: 2,
+          task_id: pid,
+        },
+        success: function (res) {
+          that.setData({
+            canComment: res.data.status
+          })
+        }
+      })
+      api.phpRequest({
+        url: 'jurisdiction.php',
+        data: {
+          userid: wx.getStorageSync('userId'),
+          state: 8,
+          task_id: pid,
+        },
+        success: function (res) {
+          that.setData({
+            canReject: res.data.status
+          })
+        }
+      })
+    }
+  },
+
+  /**
+   * 生命周期函数--监听页面显示
+   */
+  onShow: function () {
+    var that = this
+    manager.onStop = (res) => {
+      that.bindInput(res.result)
+    }
+
+    manager.onStart = (res) => {
+      wx.showToast({
+        title: "正在聆听，松开结束语音",
+      })
+    }
+    manager.onError = (res) => {
+      wx.showToast({
+        title: '说话时间太短，请重试',
+      })
+    }
+    if (that.data.id != 0) {
       api.phpRequest({
         url: 'report_list.php',
         data: {
-          id: id
+          id: that.data.id
         },
         success: function (res) {
           let taskInfo = res.data
           that.setData({
-            id: id,
-            isFb: isFb,
+            id: that.data.id,
+            isFb: that.data.isFb,
             taskInfo: taskInfo,
             imageList: taskInfo.imgs ? taskInfo.imgs.split(',') : [],
           })
@@ -214,55 +332,6 @@ Page({
           })
         }
       })
-      api.phpRequest({
-        url: 'jurisdiction.php',
-        data: {
-          userid: wx.getStorageSync('userId'),
-          state: 2,
-          task_id: pid,
-        },
-        success: function (res) {
-          that.setData({
-            canComment: res.data.status
-          })
-        }
-      })
-      api.phpRequest({
-        url: 'jurisdiction.php',
-        data: {
-          userid: wx.getStorageSync('userId'),
-          state: 8,
-          task_id: pid,
-        },
-        success: function (res) {
-          that.setData({
-            canReject: res.data.status
-          })
-        }
-      })
-    }
-  },
-
-  /**
-   * 生命周期函数--监听页面显示
-   */
-  onShow: function () {
-    var that = this
-    manager.onStop = (res) => {
-      that.bindInput(res.result)
-    }
-
-    manager.onStart = (res) => {
-      wx.showToast({
-        title: "正在聆听，松开结束语音",
-      })
-    }
-    manager.onError = (res) => {
-      wx.showToast({
-        title: '说话时间太短，请重试',
-      })
-    }
-    if (that.data.id != 0) {
       api.phpRequest({
         url: 'evaluate_list.php',
         data: {
@@ -622,6 +691,12 @@ Page({
     })
   },
 
+  bindSetReject: function (e) {
+    this.setData({
+      reject: e.detail.value
+    })
+  },
+
   // 语音输入结束事件
   bindSetQuestion: function (res) {
     var that = this
@@ -909,6 +984,12 @@ Page({
           })
         }
       }
+    })
+  },
+
+  bindUpdate: function () {
+    wx.navigateTo({
+      url: '/pages/question/question?id=' + this.data.id + '&isfb=0' + '&tid=' + this.data.pid + '&isself=' + this.data.isself,
     })
   },
 

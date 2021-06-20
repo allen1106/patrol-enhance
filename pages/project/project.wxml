@@ -77,7 +77,7 @@
     <view class="item-wrapper">
       <view class="text-wrapper">
         <text>基地面积：</text>
-        <text>{{info.jdmj}}</text>
+        <text decode="{{ true }}">{{info.jdmj}}</text>
       </view>
     </view>
     <view class="item-wrapper">

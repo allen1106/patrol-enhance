@@ -83,7 +83,7 @@ Page({
       })
     } else {
       wx.navigateTo({
-        url: '/pages/statistics/statistics?tab=' + e.currentTarget.dataset.tab,
+        url: '/pages/statistics/statistics',
       })
     }
   },
